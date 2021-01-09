@@ -14,9 +14,7 @@
     "express": "^4.17.1",
     "pg": "^8.5.1",
     "sequelize": "^6.3.5",
-    "sequelize-cli": "^6.2.0",
-    "vue": "^2.6.12",
-    "vue-server-renderer": "^2.6.12"
+    "sequelize-cli": "^6.2.0"
   },
   "devDependencies": {
     "nodemon": "^2.0.7"

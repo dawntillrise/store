@@ -1,5 +1,0 @@
-<ul id="example-1">
-  <li v-for="user in users" :key="user.dataValues.id">
-    {{ user.dataValues.email }}
-  </li>
-</ul>
