@@ -1,6 +1,6 @@
-var jwt = require('jsonwebtoken')
-var bcrypt = require('bcryptjs')
-var User = require('../models/user')
+const jwt = require('jsonwebtoken')
+const bcrypt = require('bcryptjs')
+var User = require('../models').User;
 
 const dotenv = require("dotenv");
 
@@ -8,7 +8,7 @@ const dotenv = require("dotenv");
 dotenv.config();
 
 module.exports.sign_in = async function(req, res) {
-	const candidate = await User.findOne({ email: req.body.email })
+	const candidate = await User.findOne({ where: { email: req.body.email }})
 	if (candidate) {
 		const passwordResult = bcrypt.compareSync(req.body.password, candidate.password)
 		if (passwordResult) {
@@ -39,9 +39,9 @@ module.exports.sign_in = async function(req, res) {
 }
 
 module.exports.sign_up = async function(req, res) {
-    const user = await User.findOne({ email: req.body.email })
+    const candidate = await User.findOne({ where: { email: req.body.email }})
 
-    if (user) {
+    if (candidate) {
         res.status(400).json({
             message: "Email already exist"
         })
@@ -51,7 +51,7 @@ module.exports.sign_up = async function(req, res) {
         const user = new User({
             name: req.body.name, 
             email: req.body.email,
-            password: crypt.hashSync(password, salt)
+            password: bcrypt.hashSync(password, salt)
         })
         try {
             await user.save()
