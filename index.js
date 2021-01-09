@@ -1,7 +1,7 @@
 const fs = require('fs');
 
 const express = require('express')
-const homeRoutes = require('./routes/home')
+const userRoutes = require('./routes/user')
 const path = require('path')
 const bodyParser = require('body-parser');
 const cors = require('cors');
@@ -19,7 +19,7 @@ app.use(express.urlencoded({ extended: true }))
 
 app.use('/', express.static(path.join(__dirname, 'client/dist')));
 
-app.use(homeRoutes)
+app.use(userRoutes)
 
 
 app.listen(PORT, () => {
