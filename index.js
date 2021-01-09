@@ -1,10 +1,14 @@
 const fs = require('fs');
 
 const express = require('express')
-const userRoutes = require('./routes/user')
 const path = require('path')
 const bodyParser = require('body-parser');
 const cors = require('cors');
+
+// routes
+const authRoutes = require('./routes/auth');
+const userRoutes = require('./routes/user')
+//
 
 require('dotenv').config()
 
@@ -19,8 +23,10 @@ app.use(express.urlencoded({ extended: true }))
 
 app.use('/', express.static(path.join(__dirname, 'client/dist')));
 
-app.use(userRoutes)
-
+// set routes---------------------------------------------------------//
+app.use('/api/auth/', authRoutes)
+app.use('/api/users/', userRoutes)
+//---------------------------------------------------------------------//
 
 app.listen(PORT, () => {
     console.log('Server has been started...')
