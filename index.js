@@ -1,8 +1,9 @@
-var expressVue = require("express-vue");
+const fs = require('fs');
+const Vue = require('vue');
 const express = require('express')
-const exphbs = require('express-handlebars')
 const homeRoutes = require('./routes/home')
 const path = require('path')
+const { promisify } = require('util');
 
 require('dotenv').config()
 
@@ -10,14 +11,29 @@ const PORT = process.env.PORT || 80;
 
 const app = express()
 
-const hbs = exphbs.create({
-	defaultLayout: 'main',
-	extname: 'hbs'
-})
 
-app.engine('hbs', hbs.engine)
-app.set('view engine', 'hbs')
+const template = require('fs').readFileSync('views/layouts/main.template', 'utf-8');
+
+const { renderToString } = require('vue-server-renderer').createRenderer({
+	template
+});
+
+const context = { title: 'Store' }
+
+app.engine('template', function templateEngine(filePath, options, callback) {
+	(async function() {
+	  const content = await promisify(fs.readFile).call(fs, filePath, 'utf8');
+	  const app = new Vue({ template: content, data: options });
+	  
+	  const html = await renderToString(app, context);
+  
+	  callback(null, html);
+	})().catch(err => callback(err));
+});
+
+app.set('view engine', 'template');
 app.set('views', 'views')
+
 
 app.use(express.urlencoded({ extended: true }))
 app.use(express.static(path.join(__dirname, 'public')))

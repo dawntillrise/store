@@ -5,9 +5,10 @@ const models = require( '../models');
 
 router.get('/', async (req, res) => {
     const users = await models.User.findAll()
-    res.render('home/index', {
+    console.log(users)
+    res.render('home/index.template', {
         title: "Store",
-        users
+        users: users
     })
 })
 
