@@ -12,7 +12,7 @@ const PORT = process.env.PORT || 80;
 const app = express()
 
 
-const template = require('fs').readFileSync('views/layouts/main.template', 'utf-8');
+const template = require('fs').readFileSync('views/layouts/main.html', 'utf-8');
 
 const { renderToString } = require('vue-server-renderer').createRenderer({
 	template
