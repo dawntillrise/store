@@ -1,6 +1,6 @@
 <template>
     <div class="vue-tempalte">
-        <form>
+        <form method="post" v-on:submit.prevent="createUser">
             <h3>Sign Up</h3>
 
             <div class="form-group">
@@ -18,7 +18,7 @@
                 <input type="password" class="form-control form-control-lg" v-model="user.password" />
             </div>
 
-            <button type="submit" class="btn btn-dark btn-lg btn-block" v-on:click="createUser()" >Sign Up</button>
+            <button type="submit" class="btn btn-dark btn-lg btn-block" >Sign Up</button>
 
             <p class="forgot-password text-right">
                 Already registered 
@@ -45,7 +45,7 @@
                 axios.post('https://store-magic.herokuapp.com/api/auth/register/', this.user)
                 .then(function( response ){
                     this.user = response.data;
-                    console.log(response.data);
+                    console.warn(response.data);
                 }.bind(this));
             }
         }
