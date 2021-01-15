@@ -12,7 +12,7 @@ module.exports.sign_in = async function(req, res) {
 	if (candidate) {
 		const passwordResult = bcrypt.compareSync(req.body.password, candidate.password)
 		if (passwordResult) {
-			const token = jwt.sign(
+			let token = jwt.sign(
 				{
 					email: candidate.email,
 					userId: candidate.id
@@ -54,8 +54,20 @@ module.exports.sign_up = async function(req, res) {
             password: bcrypt.hashSync(password, salt)
         })
         try {
-            await user.save()
-            res.status(201).json(user)
+			await user.save()
+			let token = jwt.sign(
+				{
+					email: user.email,
+					userId: user.id
+				},
+				process.env.TOKEN_SECRET,
+				{ expiresIn: 60 * 60 }
+			);
+
+            res.status(201).json({
+				user, 
+				token: `Bearer ${token}`
+			});
         } catch (e) {
             res.status(401).json({
                 message: "Can't save user"

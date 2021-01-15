@@ -42,7 +42,7 @@
         },
          methods: {
             createUser(){
-                axios.post('https://store-magic.herokuapp.com/api/auth/register/', this.user)
+                axios.post('http://localhost:3000/api/auth/register/', this.user)
                 .then(function( response ){
                     this.user = response.data;
                     console.warn(response.data);
