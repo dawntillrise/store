@@ -1,5 +1,7 @@
 <template>
     <div class="vue-tempalte">
+         <div class="vertical-center">
+        <div class="inner-block">
         <form method="post" v-on:submit.prevent="loginUser">
             <h3>Sign In</h3>
 
@@ -20,6 +22,8 @@
             </p>
 
         </form>
+        </div>
+      </div>
     </div>
 </template>
 

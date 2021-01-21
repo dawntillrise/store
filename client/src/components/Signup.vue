@@ -1,5 +1,7 @@
 <template>
     <div class="vue-tempalte">
+         <div class="vertical-center">
+        <div class="inner-block">
         <form method="post" v-on:submit.prevent="createUser">
             <h3>Sign Up</h3>
 
@@ -25,6 +27,8 @@
                 <router-link :to="{name: 'login'}">sign in?</router-link>
             </p>
         </form>
+        </div>
+      </div>
     </div>
 </template>
 
